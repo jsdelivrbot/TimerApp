@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
-//import TaskName from './TimerInput/task_name';
 
 export default class DoneItem extends Component {
-
 	doneTasks() {
-		this.props.doneTasks(task);
+		this.props.doneTasks(this.props.task);
 	}
 	render() {
-		let task = this.props.task;
-   	return <li onClick={this.props.doneTasks}>{task}</li>
+   	return (
+			<li className="list-group-item clearfix">
+				{this.props.task}
+				<div className="pull-right" role="group">
+				<button type="button" className="btn btn-xs btn-danger img-circle" onClick={this.doneTasks.bind(this)}>&#xff38;</button>
+				</div>
+			</li>
+		);
 	}
 }
