@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 // import TimerInput from './components/timer_input';
-import DoneList from './components/done_list';
+// import DoneList from './components/done_list';
+import DoneItem from './components/done_item';
 
 class App extends Component {
 	constructor(props) {
@@ -12,49 +13,43 @@ class App extends Component {
 	}
    addTask() {
 		var tasks = this.props.tasks;
-		tasks.push(React.findDOMNode(this.refs.myInput).value);
-		React.findDOMNode(this.refs.myInput).value = "";
+		tasks.push(ReactDOM.findDOMNode(this.refs.myInput).value);
+		ReactDOM.findDOMNode(this.refs.myInput).value = "";
 		localStorage.setItem('tasks', JSON.stringify(tasks));
 		this.setState({ tasks:tasks});
-		console.log(tasks);
 	}
-	// doneTasks(task) {
-	// 	var tasks = this.props.tasks;
-	// 	tasks.splice(tasks.indexOf(tasks), 1);
-	// 	localStorage.setItem('tasks', JSON.stringify(tasks));
-	// 	this.setState({ tasks:tasks});
-	// }
-	// // onFormSubmit(event) {
+	doneTasks(task) {
+		var tasks = this.props.tasks;
+		tasks.splice(tasks.indexOf(task), 1);
+		localStorage.setItem('tasks', JSON.stringify(tasks));
+		this.setState({ tasks: tasks});
+	}
+	// onFormSubmit(event) {
 	// 	event.preventDefault();
 	// 	this.setState({ tasks: '' });
 	// }
    render() {
-      return (
-         <div>
-            <header className="header">
-      			<h1>Tasks: {this.props.tasks.length}</h1>
-					<form className="input-group">
-						<input
-							type='text'
-							ref='myInput'
-							className='form-control'
-							placeholder='Task name here...'/>
-						<div className='input-group-btn'>
-							<button
-								type='submit'
-								className='btn btn-default'
-								onClick={this.addTask}>Start</button>
-						</div>
-		 			</form>
-				</header>
-				<div>
-  					<DoneList tasks={this.state.tasks} doneTasks={this.doneTasks}/>
-  				</div>
-         </div>
-      );
+		return (
+      <div>
+        <h1>Tasks: {this.props.tasks.length}</h1>
+        <ul>
+        {
+          this.state.tasks.map(function(task) {
+				var keyID = 0;
+            return <DoneItem task={task} doneTasks={this.doneTasks.bind(this)} />
+          }.bind(this))
+        }
+        </ul>
+        <input type="text" ref="myInput" />
+        <button onClick={this.addTask.bind(this)}>Start</button>
+      </div>
+    );
    }
 }
 
-var tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
-ReactDOM.render(<App tasks={tasks}/>, document.querySelector('.container'));
+ReactDOM.render(
+    <App tasks={tasks} />,
+    document.getElementById('container')
+);
