@@ -14,19 +14,19 @@ export default class App extends Component {
 		this.onInputChange = this.onInputChange.bind(this);
 	}
 	onInputChange(it, newTitle, newRate) {
-		var item = this.props.item;
-		var i = item.indexOf(it);
+		let item = this.props.item;
+		let i = item.indexOf(it);
 		item[i].title = newTitle;
 		item[i].rate = newRate;
 		localStorage.setItem('item', JSON.stringify(item));
 		this.setState({ item: item});
    }
 	ticking () {
-		var sec = this.state.count;
-		var h = Math.floor(sec/3600);
-		var m = Math.floor(sec%3600/60);
-		var s = Math.floor(sec%3600%60);
-		var timeUp = ((h > 0 ? h:"00" + ":" + (m < 10 ? "0" : "0") : "") + m + ":" + (s < 10 ? "0" : "") + s);
+		let sec = this.state.count;
+		let h = Math.floor(sec/3600);
+		let m = Math.floor(sec%3600/60);
+		let s = Math.floor(sec%3600%60);
+		let timeUp = ((h > 0 ? h:"00" + ":" + (m < 10 ? "0" : "0") : "") + m + ":" + (s < 10 ? "0" : "") + s);
 		this.setState({count: this.state.count + 1, timeUp: timeUp});
 	}
 	startTimer () {
@@ -37,8 +37,8 @@ export default class App extends Component {
 		clearInterval(this.timer);
 	}
    addTask() {
-		var item = this.props.item;
-		var i = {
+		let item = this.props.item;
+		let i = {
 			title: ReactDOM.findDOMNode(this.refs.taskName).value,
 			rate: ReactDOM.findDOMNode(this.refs.taskRate).value,
 			count: this.state.count
@@ -51,7 +51,7 @@ export default class App extends Component {
 		this.setState({ item:item});
 	}
 	doneTasks(task) {
-		var item = this.props.item;
+		let item = this.props.item;
 		item.splice(item.indexOf(task), 1);
 		localStorage.setItem('item', JSON.stringify(item));
 		this.setState({ item: item});
@@ -74,36 +74,28 @@ export default class App extends Component {
    render() {
 		return (
       <div>
-			<h1>Tasks: {this.props.item.length}</h1>
-		  	<form className="form-inline" onSubmit={this.onFormSubmit}>
-				<div className="form-group">
-					<label className="sr-only" htmlFor="task-name-input">Task Name</label>
-					<input
-						type="text"
-						className="form-control"
-						placeholder="Task name here..."
-						ref="taskName"
-						id="task-name-input"/>
-    			</div>
-				<div className="form-group">
-					<label className="sr-only" htmlFor="task-price-input">Task Price</label>
-					<input
-						type="number"
-						className="form-control"
-						placeholder="RUB"
-						ref="taskRate"
-						aria-describedby="basic-addon"
-						id="task-price-input"/>
-    			</div>
-				<div className="form-group">
-				<div>{this.state.timeUp}</div>
-				</div>
+			<h3>How many tasks you have: {this.props.item.length}</h3>
+	  	<form className="form-inline row" onSubmit={this.onFormSubmit}>
+				<input
+					type="text"
+					className="task-input col-sm-5"
+					placeholder="Task name here..."
+					ref="taskName"
+					id="task-name-input"/>
+				<input
+					type="number"
+					className="task-input col-sm-3"
+					placeholder="RUB"
+					ref="taskRate"
+					aria-describedby="basic-addon"
+					id="task-price-input"/>
+				<div className="col-sm-2">{this.state.timeUp}</div>
 				<button
 					id="start-stop-btn"
-					className="btn btn-secondary"
+					className="btn btn-secondary col-sm-2"
 					data-text-swap="Stop"
 					onClick={this.onClickBtn.bind(this)}>Start</button>
-   		</form>
+ 			</form>
 			<ul className="list-group">
 				{this.state.item.map(function(i) {
 					return <DoneItem

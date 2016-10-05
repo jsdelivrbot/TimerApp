@@ -1,0 +1,14 @@
+body {
+	background-color: #e6e6e6;
+}
+#container {
+	padding: 30px;
+}
+.task-input {
+	height: 40px;
+	float: left;
+	padding: 0 0 0 5px;
+	box-sizing: border-box;
+	border: none;
+	border-right: 1px solid #e6e6e6;
+}
