@@ -74,29 +74,28 @@ export default class App extends Component {
    render() {
 		return (
       <div>
-			<h3>How many tasks you have: {this.props.item.length}</h3>
-	  	<form className="form-inline row" onSubmit={this.onFormSubmit}>
-				<input
-					type="text"
-					className="task-input col-sm-5"
-					placeholder="Task name here..."
-					ref="taskName"
-					id="task-name-input"/>
-				<input
-					type="number"
-					className="task-input col-sm-3"
-					placeholder="RUB"
-					ref="taskRate"
-					aria-describedby="basic-addon"
-					id="task-price-input"/>
-				<div className="col-sm-2">{this.state.timeUp}</div>
+			<h3 id="task-counter">How many tasks you have: {this.props.item.length}</h3>
+	  	<form className="input-field" onSubmit={this.onFormSubmit}>
+					<input
+						type="text"
+						placeholder="Task name here..."
+						ref="taskName"
+						className="task-input task-name"
+						id="task-name-input"/>
+					<input
+						type="number"
+						placeholder="RUB"
+						ref="taskRate"
+						className="task-input task-rate"
+						id="task-price-input"/>
+				<div className="ticking-timer">{this.state.timeUp}</div>
 				<button
 					id="start-stop-btn"
-					className="btn btn-secondary col-sm-2"
+					className="start-stop-btn"
 					data-text-swap="Stop"
 					onClick={this.onClickBtn.bind(this)}>Start</button>
  			</form>
-			<ul className="list-group">
+			<ul className="list-of-tasks">
 				{this.state.item.map(function(i) {
 					return <DoneItem
 								title={i.title}

@@ -20,12 +20,28 @@ export default class DoneItem extends Component {
 		const price = Math.round(hours*rate * 10) / 10;
 
    	return (
-			<li className="list-group-item clearfix row">
-				<input className="task-input col-sm-5" ref="newTitle" type="text" value={title} onChange={this.update.bind(this)}/>
-				<input className="task-input col-sm-2" ref="newRate" type="number" value={rate} onChange={this.update.bind(this)}/>
-				<div className="col-sm-2">{price} RUB</div>
-				<div className="col-sm-2">{timeSpended}</div>
-				<button type="button" className="btn btn-xs btn-danger col-sm-1" onClick={this.doneTasks.bind(this)}>&#xff38;</button>
+			<li className="done-task">
+	      	<input
+						className="task-input task-name"
+						ref="newTitle"
+						type="text"
+						value={title}
+						onChange={this.update.bind(this)}/>
+					<input
+						className="task-input task-rate"
+						ref="newRate"
+						type="number"
+						value={rate}
+						onChange={this.update.bind(this)}/>
+					<div className="ticking-timer">{timeSpended}</div>
+					<div className="price">
+						<div className="task-price">{price} RUB</div>
+						<button
+							type="button"
+							id="delete-task"
+							onClick={this.doneTasks.bind(this)}>&#xff38;
+						</button>
+					</div>
 			</li>
 		);
 	}
